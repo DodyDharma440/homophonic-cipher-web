@@ -11,21 +11,21 @@
     <div class="center flex-col p-4 pb-10 container max-w-md mx-auto">
       <div class="flex flex-nowrap w-full gap-2 mb-4">
         <button
-          class="button"
+          class="px-4 py-2 rounded-md w-full"
           (click)="changeMode('encrypt')"
           [ngClass]="{
-          'bg-gray-50': mode ==='decrypt',
-          'bg-black text-white': mode === 'encrypt',
-        }"
+            'bg-gray-50 dark:bg-gray-800': mode ==='decrypt',
+            'bg-gray-900 text-white dark:bg-white dark:text-black': mode === 'encrypt',
+          }"
         >
           Enkripsi
         </button>
         <button
-          class="button bg-gray-50"
+          class="px-4 py-2 rounded-md w-full"
           (click)="changeMode('decrypt')"
           [ngClass]="{
-            'bg-gray-50': mode === 'encrypt',
-            'bg-black text-white': mode === 'decrypt'
+            'bg-gray-50 dark:bg-gray-800': mode ==='encrypt',
+            'bg-gray-900 text-white dark:bg-white dark:text-black': mode === 'decrypt',
           }"
         >
           Dekripsi

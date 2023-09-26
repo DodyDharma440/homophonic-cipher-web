@@ -4,7 +4,7 @@
       {{ cryptType === "encrypt" ? "Pesan" : "Teks ter-enkripsi" }}
     </label>
     <input
-      class="border border-gray-300 focus:outline-none px-4 py-2 rounded-md focus:ring-1 focus:ring-blue-500 w-full"
+      class="input"
       [placeholder]="
         cryptType === 'encrypt'
           ? 'Pesan yang akan di-enkripsi...'
@@ -14,16 +14,15 @@
       [value]="inputValue"
     />
   </div>
-  <button
-    class="button bg-black text-white mt-2 capitalize"
-    (click)="onSubmit()"
-  >
+  <button class="button w-full mt-2 capitalize" (click)="onSubmit()">
     {{ cryptType }}
   </button>
 
   <div *ngIf="result" class="mt-2">
     <p>Hasil {{ cryptType === "encrypt" ? "Enkripsi" : "Dekripsi" }}</p>
-    <div class="border border-gray-300 rounded-md p-4 bg-gray-100">
+    <div
+      class="border border-gray-300 dark:border-gray-500 rounded-md p-4 bg-gray-100 dark:bg-gray-700"
+    >
       <p class="break-words">{{ result }}</p>
     </div>
   </div>

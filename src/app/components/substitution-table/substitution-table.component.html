@@ -2,7 +2,7 @@
   <div class="center gap-4">
     <h1 class="font-semibold text-2xl">Tabel Substitusi</h1>
     <button
-      class="center border p-1 border-gray-300 rounded-md"
+      class="center border p-1 border-gray-300 dark:border-gray-500 rounded-md"
       (click)="onToggleTable()"
     >
       <ng-icon
@@ -13,7 +13,7 @@
 
   <table *ngIf="isShowTable" class="text-left text-sm font-light mx-4">
     <thead>
-      <tr class="border-b font-medium dark:border-neutral-500">
+      <tr class="border-b font-medium dark:border-gray-500">
         <th scope="col" class="px-6 py-4 text-center"></th>
         <th
           *ngFor="let char of tableHead"
@@ -27,7 +27,7 @@
     <tbody>
       <tr
         *ngFor="let char of substitutions | keyvalue : onCompare"
-        class="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
+        class="border-b transition duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-800"
       >
         <td class="whitespace-nowrap px-6 py-4 font-medium">
           {{ char.key }}

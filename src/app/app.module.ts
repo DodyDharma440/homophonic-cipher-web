@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { heroChevronUp, heroChevronDown } from '@ng-icons/heroicons/outline';
+import {
+  heroChevronUp,
+  heroChevronDown,
+  heroSun,
+  heroMoon,
+} from '@ng-icons/heroicons/outline';
 import { ionLogoGithub } from '@ng-icons/ionicons';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,7 +25,13 @@ import { SecretKeyFormComponent } from './components/secret-key-form/secret-key-
   ],
   imports: [
     BrowserModule,
-    NgIconsModule.withIcons({ heroChevronDown, heroChevronUp, ionLogoGithub }),
+    NgIconsModule.withIcons({
+      heroChevronDown,
+      heroChevronUp,
+      heroSun,
+      heroMoon,
+      ionLogoGithub,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

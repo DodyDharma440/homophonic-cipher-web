@@ -7,5 +7,13 @@
 }
 
 .button {
-  @apply w-full px-4 py-2 rounded-md;
+  @apply bg-gray-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-md;
+}
+
+.disabled-button {
+  @apply disabled:opacity-20 disabled:cursor-not-allowed;
+}
+
+.input {
+  @apply border border-gray-300 focus:outline-none px-4 py-2 rounded-md focus:ring-1 focus:ring-blue-500 w-full dark:bg-gray-800;
 }

@@ -1,15 +1,33 @@
-<main class="min-h-screen relative h-0">
-  <nav class="fixed top-0 inset-x-0 shadow-md bg-white px-6 py-4 z-50">
+<main class="min-h-screen relative h-0 dark:bg-gray-900">
+  <nav
+    class="fixed top-0 inset-x-0 shadow-md bg-white dark:bg-gray-900 px-6 py-4 z-50 dark:border-b dark:border-b-gray-400"
+  >
     <div class="flex justify-between items-center container mx-auto">
       <div>
         <p class="font-semibold">Homophonic Cipher</p>
       </div>
 
       <div class="flex items-center gap-4">
-        <button
-          class="bg-white border border-gray-200 p-2 rounded-md center hover:bg-gray-50"
+        <a
+          href="https://github.com/DodyDharma440/homophonic-cipher-web"
+          target="_blank"
+          rel="noreferrer noopener"
         >
-          <ng-icon name="ionLogoGithub" class="text-xl"></ng-icon>
+          <button
+            class="bg-white border border-gray-200 p-2 rounded-md center hover:bg-gray-50 text-black"
+          >
+            <ng-icon name="ionLogoGithub" class="text-xl"></ng-icon>
+          </button>
+        </a>
+
+        <button
+          class="p-2 rounded-md center border-gray-800 bg-gray-900 text-white dark:text-gray-900 dark:bg-white dark:border-gray-200"
+          (click)="onToggleTheme()"
+        >
+          <ng-icon
+            [name]="theme === 'dark' ? 'heroSun' : 'heroMoon'"
+            class="text-xl"
+          ></ng-icon>
         </button>
       </div>
     </div>
