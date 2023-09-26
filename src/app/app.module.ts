@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import * as heroIcons from '@ng-icons/heroicons/outline';
-import * as ionIcons from '@ng-icons/ionicons';
+import { heroChevronUp, heroChevronDown } from '@ng-icons/heroicons/outline';
+import { ionLogoGithub } from '@ng-icons/ionicons';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -11,10 +11,16 @@ import { SubstitutionTableComponent } from './components/substitution-table/subs
 import { SecretKeyFormComponent } from './components/secret-key-form/secret-key-form.component';
 
 @NgModule({
-  declarations: [AppComponent, PageLayoutComponent, CrypterComponent, SubstitutionTableComponent, SecretKeyFormComponent],
+  declarations: [
+    AppComponent,
+    PageLayoutComponent,
+    CrypterComponent,
+    SubstitutionTableComponent,
+    SecretKeyFormComponent,
+  ],
   imports: [
     BrowserModule,
-    NgIconsModule.withIcons({ ...heroIcons, ...ionIcons }),
+    NgIconsModule.withIcons({ heroChevronDown, heroChevronUp, ionLogoGithub }),
   ],
   providers: [],
   bootstrap: [AppComponent],
