@@ -1,0 +1,30 @@
+<div class="w-full" [ngClass]="{ hidden: !isShow }">
+  <div class="w-full">
+    <label class="mb-1">
+      {{ cryptType === "encrypt" ? "Pesan" : "Teks ter-enkripsi" }}
+    </label>
+    <input
+      class="border border-gray-300 focus:outline-none px-4 py-2 rounded-md focus:ring-1 focus:ring-blue-500 w-full"
+      [placeholder]="
+        cryptType === 'encrypt'
+          ? 'Pesan yang akan di-enkripsi...'
+          : 'Pesan yang akan di-dekripsi...'
+      "
+      (input)="onChange($event)"
+      [value]="inputValue"
+    />
+  </div>
+  <button
+    class="button bg-black text-white mt-2 capitalize"
+    (click)="onSubmit()"
+  >
+    {{ cryptType }}
+  </button>
+
+  <div *ngIf="result" class="mt-2">
+    <p>Hasil {{ cryptType === "encrypt" ? "Enkripsi" : "Dekripsi" }}</p>
+    <div class="border border-gray-300 rounded-md p-4 bg-gray-100">
+      <p class="break-words">{{ result }}</p>
+    </div>
+  </div>
+</div>

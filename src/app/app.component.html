@@ -1,0 +1,52 @@
+<page-layout>
+  <secret-key-form (onGenerate)="onGenerate($event)"></secret-key-form>
+
+  <ng-container *ngIf="isGenerated()">
+    <substitution-table
+      class="center flex-col pb-10"
+      [substitutions]="substitutions"
+      [secretKey]="secretKey"
+    ></substitution-table>
+
+    <div class="center flex-col p-4 pb-10 container max-w-md mx-auto">
+      <div class="flex flex-nowrap w-full gap-2 mb-4">
+        <button
+          class="button"
+          (click)="changeMode('encrypt')"
+          [ngClass]="{
+          'bg-gray-50': mode ==='decrypt',
+          'bg-black text-white': mode === 'encrypt',
+        }"
+        >
+          Enkripsi
+        </button>
+        <button
+          class="button bg-gray-50"
+          (click)="changeMode('decrypt')"
+          [ngClass]="{
+            'bg-gray-50': mode === 'encrypt',
+            'bg-black text-white': mode === 'decrypt'
+          }"
+        >
+          Dekripsi
+        </button>
+      </div>
+
+      <crypter
+        class="w-full"
+        (onCrypt)="onEncrypt($event.value)"
+        cryptType="encrypt"
+        [result]="encryptResult"
+        [isShow]="mode === 'encrypt'"
+      ></crypter>
+
+      <crypter
+        class="w-full"
+        (onCrypt)="onDecrypt($event.value)"
+        cryptType="decrypt"
+        [result]="decryptResult"
+        [isShow]="mode === 'decrypt'"
+      ></crypter>
+    </div>
+  </ng-container>
+</page-layout>
