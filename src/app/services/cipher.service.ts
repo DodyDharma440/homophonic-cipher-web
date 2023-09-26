@@ -1,15 +1,26 @@
 import { Injectable } from '@angular/core';
-import { allChars } from '../constants/characters';
+import {
+  allChars as defaultAllChars,
+  characters,
+} from '../constants/characters';
+import { GenerateOptions } from '../interfaces/cipher';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CipherService {
   private substitutions: Record<string, string[]> = {};
+  private allCharsCount = 0;
 
-  constructor() {}
+  generateSubstitutions(secretKey: string, options: GenerateOptions) {
+    let allChars = defaultAllChars;
+    this.allCharsCount = allChars.length;
 
-  generateSubstitutions(secretKey: string) {
+    if (options.alphabetsOnly) {
+      allChars = characters.alphabeths;
+      this.allCharsCount = characters.alphabeths.length;
+    }
+
     const swapPositions = (array: string[], charIndex: number) => {
       const swapped: string[] = [];
 
@@ -74,7 +85,7 @@ export class CipherService {
   }
 
   decrypt(encrypted: string, secretKey: string) {
-    const longestLength = `${allChars.length * secretKey.length}`.length;
+    const longestLength = `${this.allCharsCount * secretKey.length}`.length;
 
     const splitString = (inputString: string, chunkSize: number) => {
       const chunks: string[] = [];

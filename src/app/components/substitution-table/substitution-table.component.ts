@@ -13,9 +13,11 @@ export class SubstitutionTableComponent implements OnChanges {
   isShowTable = true;
 
   ngOnChanges(changes: SimpleChanges): void {
-    const value = changes['secretKey'].currentValue || '';
-    this.isShowTable = true;
-    this.tableHead = value.split('');
+    if (changes['secretKey']) {
+      const value = changes['secretKey'].currentValue || '';
+      this.isShowTable = true;
+      this.tableHead = value.split('');
+    }
   }
 
   onCompare(_left: KeyValue<any, any>, _right: KeyValue<any, any>): number {

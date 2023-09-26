@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CipherService } from './services/cipher.service';
+import { GenerateOptions } from './interfaces/cipher';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,13 @@ export class AppComponent {
     return Object.keys(this.substitutions).length;
   }
 
-  onGenerate(value: string) {
+  onGenerate(data: { value: string } & GenerateOptions) {
+    const { value, ...options } = data;
     this.secretKey = value;
-    this.substitutions = this.cipherService.generateSubstitutions(value);
+    this.substitutions = this.cipherService.generateSubstitutions(
+      value,
+      options
+    );
   }
 
   changeMode(newMode: typeof this.mode) {
