@@ -1,5 +1,8 @@
 <page-layout>
-  <secret-key-form (onGenerate)="onGenerate($event)"></secret-key-form>
+  <secret-key-form
+    [numberSubstitution]="numberSubstitution"
+    (onGenerate)="onGenerate($event)"
+  ></secret-key-form>
 
   <ng-container *ngIf="isGenerated()">
     <substitution-table
@@ -38,6 +41,7 @@
         cryptType="encrypt"
         [result]="encryptResult"
         [isShow]="mode === 'encrypt'"
+        [error]="getError('encrypt')"
       ></crypter>
 
       <crypter
@@ -46,6 +50,7 @@
         cryptType="decrypt"
         [result]="decryptResult"
         [isShow]="mode === 'decrypt'"
+        [error]="getError('decrypt')"
       ></crypter>
     </div>
   </ng-container>

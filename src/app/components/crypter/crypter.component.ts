@@ -9,6 +9,7 @@ export class CrypterComponent {
   @Input() cryptType: CryptMode = 'encrypt';
   @Input() isShow = false;
   @Input() result = '';
+  @Input() error: string | null = null;
   @Output() onCrypt = new EventEmitter<{ value: string }>();
 
   inputValue = '';

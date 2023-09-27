@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CipherService } from './services/cipher.service';
 import { GenerateOptions } from './interfaces/cipher';
+import { makeRandomKeys } from './utils/cipher';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  numberSubstitution: Record<string, string[]> = {};
   substitutions: Record<string, string[]> = {};
   secretKey = '';
 
@@ -17,6 +19,18 @@ export class AppComponent {
 
   constructor(private cipherService: CipherService) {}
 
+  ngOnInit(): void {
+    const lsKey = 'client-number-keys';
+    const defaultKey = localStorage.getItem(lsKey) || null;
+    if (defaultKey) {
+      this.numberSubstitution = JSON.parse(defaultKey);
+    } else {
+      const keys = makeRandomKeys();
+      this.numberSubstitution = keys;
+      localStorage.setItem('client-number-keys', JSON.stringify(keys));
+    }
+  }
+
   isGenerated() {
     return Object.keys(this.substitutions).length;
   }
@@ -26,6 +40,7 @@ export class AppComponent {
     this.secretKey = value;
     this.substitutions = this.cipherService.generateSubstitutions(
       value,
+      this.numberSubstitution,
       options
     );
   }
@@ -40,5 +55,11 @@ export class AppComponent {
 
   onDecrypt(value: string) {
     this.decryptResult = this.cipherService.decrypt(value, this.secretKey);
+  }
+
+  getError(mode: typeof this.mode) {
+    return mode === 'encrypt'
+      ? this.cipherService.errorEncrypt
+      : this.cipherService.errorDecrypt;
   }
 }

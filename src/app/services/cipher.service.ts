@@ -4,6 +4,7 @@ import {
   characters,
 } from '../constants/characters';
 import { GenerateOptions } from '../interfaces/cipher';
+import { splitString } from '../utils/cipher';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +13,18 @@ export class CipherService {
   private substitutions: Record<string, string[]> = {};
   private allCharsCount = 0;
 
-  generateSubstitutions(secretKey: string, options: GenerateOptions) {
+  errorEncrypt: string | null = null;
+  errorDecrypt: string | null = null;
+
+  generateSubstitutions(
+    secretKey: string,
+    numberSubstitution?: Record<string, string[]>,
+    options?: GenerateOptions
+  ) {
     let allChars = defaultAllChars;
     this.allCharsCount = allChars.length;
 
-    if (options.alphabetsOnly) {
+    if (options?.alphabetsOnly) {
       allChars = characters.alphabeths;
       this.allCharsCount = characters.alphabeths.length;
     }
@@ -45,7 +53,16 @@ export class CipherService {
       allChars.forEach((_, index) => {
         keys[i] = keys[i] || [];
         const result = allChars.length * i + (index + 1);
-        const resultLabel = `${result}`.padStart(longestLength, '0');
+        let resultLabel = `${result}`.padStart(longestLength, '0');
+
+        if (options?.encryptNumber && numberSubstitution) {
+          resultLabel = this.encryptNumber(
+            resultLabel,
+            numberSubstitution,
+            index * allChars.length,
+            secretKey
+          );
+        }
 
         keys[i].push(resultLabel);
       });
@@ -61,7 +78,9 @@ export class CipherService {
     allChars.forEach((char, index) => {
       for (let i = 0; i < secretKey.length; i++) {
         keysByChar[char] = keysByChar[char] || [];
-        keysByChar[char].push(swappedKeys[i][index]);
+        let item = swappedKeys[i][index];
+
+        keysByChar[char].push(item);
       }
     });
 
@@ -69,46 +88,84 @@ export class CipherService {
     return keysByChar;
   }
 
+  private encryptNumber(
+    value: string,
+    subs: Record<string, string[]>,
+    startFrom: number,
+    secretKey: string
+  ) {
+    const textArr = value.split('');
+    let result = '';
+
+    let num =
+      Math.round(Number(textArr[textArr.length - 1]) * startFrom) +
+      secretKey.length;
+
+    const numArr = `${num}`.split('');
+    let index = Number(numArr[numArr.length - 1]);
+
+    textArr.forEach((char, i) => {
+      if (index < 0) {
+        index += 5;
+      } else if (index >= 5) {
+        index -= 5;
+      }
+
+      const encryptChars = subs[char];
+      const element = encryptChars[index];
+
+      result += element;
+    });
+
+    return result;
+  }
+
   encrypt(text: string) {
+    this.errorEncrypt = null;
+
     const textArr = text.split('');
     let result = '';
 
     textArr.forEach((char) => {
       const encryptChars = this.substitutions[char];
       const encryptElement =
-        encryptChars?.[Math.floor(Math.random() * encryptChars?.length || 0)];
+        encryptChars?.[Math.floor(Math.random() * encryptChars.length)];
 
-      result += encryptElement;
+      if (typeof encryptElement !== 'undefined') {
+        result += encryptElement;
+        return;
+      }
+
+      this.errorEncrypt =
+        'Terjadi kesalahan saat enkripsi karena karakter tidak terdaftar dalam tabel substitusi';
     });
 
     return result;
   }
 
   decrypt(encrypted: string, secretKey: string) {
+    this.errorDecrypt = null;
     const longestLength = `${this.allCharsCount * secretKey.length}`.length;
-
-    const splitString = (inputString: string, chunkSize: number) => {
-      const chunks: string[] = [];
-      for (let i = 0; i < inputString.length; i += chunkSize) {
-        chunks.push(inputString.slice(i, i + chunkSize));
-      }
-      return chunks;
-    };
-
     const textArr = splitString(encrypted, longestLength);
 
-    let result: string[] = [];
+    let result = '';
 
     textArr.forEach((char) => {
       let isFound = false;
       Object.entries(this.substitutions).forEach(([key, value]) => {
         if (value.includes(char) && !isFound) {
-          result.push(key);
           isFound = true;
+          if (typeof key !== 'undefined') {
+            result += key;
+            return;
+          }
+
+          this.errorDecrypt =
+            'Terjadi kesalahan saat dekripsi karena karakter tidak terdaftar dalam tabel substitusi';
         }
       });
     });
 
-    return result.join('');
+    return result;
   }
 }

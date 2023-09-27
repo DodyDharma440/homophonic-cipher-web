@@ -18,12 +18,22 @@
     {{ cryptType }}
   </button>
 
-  <div *ngIf="result" class="mt-2">
+  <div *ngIf="result || error" class="mt-2">
     <p>Hasil {{ cryptType === "encrypt" ? "Enkripsi" : "Dekripsi" }}</p>
+
     <div
+      *ngIf="!error; else errorCrypt"
       class="border border-gray-300 dark:border-gray-500 rounded-md p-4 bg-gray-100 dark:bg-gray-700"
     >
       <p class="break-words">{{ result }}</p>
     </div>
+
+    <ng-template #errorCrypt>
+      <div
+        class="border border-red-300 dark:border-red-500 rounded-md p-4 bg-gray-100 dark:bg-gray-700"
+      >
+        <p class="break-words text-red-600">{{ error }}</p>
+      </div>
+    </ng-template>
   </div>
 </div>

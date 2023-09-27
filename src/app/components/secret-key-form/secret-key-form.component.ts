@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -12,6 +13,7 @@ import { GenerateOptions } from 'src/app/interfaces/cipher';
   templateUrl: './secret-key-form.component.html',
 })
 export class SecretKeyFormComponent {
+  @Input() numberSubstitution: Record<string, string[]> = {};
   @Output() onGenerate = new EventEmitter<
     { value: string } & GenerateOptions
   >();
