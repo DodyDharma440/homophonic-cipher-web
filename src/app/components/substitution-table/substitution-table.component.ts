@@ -13,10 +13,16 @@ export class SubstitutionTableComponent implements OnChanges {
   isShowTable = true;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['secretKey']) {
-      const value = changes['secretKey'].currentValue || '';
-      this.isShowTable = true;
+    const secretKeyChanges = changes['secretKey'];
+    const subsChanges = changes['substitutions'];
+
+    if (secretKeyChanges) {
+      const value = secretKeyChanges.currentValue || '';
       this.tableHead = value.split('');
+    }
+
+    if (secretKeyChanges || subsChanges) {
+      this.isShowTable = true;
     }
   }
 

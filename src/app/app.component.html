@@ -42,6 +42,7 @@
         [result]="encryptResult"
         [isShow]="mode === 'encrypt'"
         [error]="getError('encrypt')"
+        [substitutions]="substitutions"
       ></crypter>
 
       <crypter
@@ -51,6 +52,7 @@
         [result]="decryptResult"
         [isShow]="mode === 'decrypt'"
         [error]="getError('decrypt')"
+        [substitutions]="substitutions"
       ></crypter>
     </div>
   </ng-container>

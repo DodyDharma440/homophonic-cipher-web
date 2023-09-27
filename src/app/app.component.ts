@@ -38,6 +38,8 @@ export class AppComponent implements OnInit {
   onGenerate(data: { value: string } & GenerateOptions) {
     const { value, ...options } = data;
     this.secretKey = value;
+    this.encryptResult = '';
+    this.decryptResult = '';
     this.substitutions = this.cipherService.generateSubstitutions(
       value,
       this.numberSubstitution,
