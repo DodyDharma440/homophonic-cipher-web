@@ -104,11 +104,11 @@ export class CipherService {
     const numArr = `${num}`.split('');
     let index = Number(numArr[numArr.length - 1]);
 
-    textArr.forEach((char, i) => {
+    textArr.forEach((char) => {
       if (index < 0) {
-        index += 5;
-      } else if (index >= 5) {
-        index -= 5;
+        index += 9;
+      } else if (index >= 9) {
+        index -= 9;
       }
 
       const encryptChars = subs[char];

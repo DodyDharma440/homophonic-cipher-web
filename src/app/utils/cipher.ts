@@ -8,9 +8,13 @@ export const makeRandomKeys = () => {
     const replacements: string[] = [];
 
     const makeReplacementChar = () => {
-      const randomIndex = Math.floor(Math.random() * allChars.length);
+      const allCharExcludeSpace = allChars.filter((c) => c !== ' ');
 
-      const replacementChar = allChars.filter((c) => c !== ' ')[randomIndex];
+      const randomIndex = Math.floor(
+        Math.random() * allCharExcludeSpace.length
+      );
+
+      const replacementChar = allCharExcludeSpace[randomIndex];
       const isExist = Object.values(keys).some((val) =>
         val.includes(replacementChar)
       );

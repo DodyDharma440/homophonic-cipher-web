@@ -36,6 +36,8 @@ export class AppComponent implements OnInit {
   }
 
   onGenerate(data: { value: string } & GenerateOptions) {
+    console.log(this.numberSubstitution);
+
     const { value, ...options } = data;
     this.secretKey = value;
     this.encryptResult = '';
