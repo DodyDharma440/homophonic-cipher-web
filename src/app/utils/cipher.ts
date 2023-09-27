@@ -10,7 +10,7 @@ export const makeRandomKeys = () => {
     const makeReplacementChar = () => {
       const randomIndex = Math.floor(Math.random() * allChars.length);
 
-      const replacementChar = allChars[randomIndex];
+      const replacementChar = allChars.filter((c) => c !== ' ')[randomIndex];
       const isExist = Object.values(keys).some((val) =>
         val.includes(replacementChar)
       );
