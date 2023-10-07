@@ -9,7 +9,7 @@ export class SubstitutionTableComponent implements OnChanges {
   @Input() secretKey = '';
   @Input() substitutions: Record<string, string[]> = {};
 
-  tableHead: string[] = this.secretKey.split('');
+  secretKeyArr: string[] = this.secretKey.split('');
   isShowTable = true;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -18,7 +18,7 @@ export class SubstitutionTableComponent implements OnChanges {
 
     if (secretKeyChanges) {
       const value = secretKeyChanges.currentValue || '';
-      this.tableHead = value.split('');
+      this.secretKeyArr = value.split('');
     }
 
     if (secretKeyChanges || subsChanges) {

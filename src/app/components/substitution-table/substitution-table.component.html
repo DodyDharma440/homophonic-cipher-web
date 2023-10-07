@@ -1,5 +1,5 @@
 <ng-container>
-  <div class="center gap-4">
+  <div class="center gap-4 mb-4">
     <h1 class="font-semibold text-2xl">Tabel Substitusi</h1>
     <button
       class="center border p-1 border-gray-300 dark:border-gray-500 rounded-md"
@@ -11,31 +11,41 @@
     </button>
   </div>
 
-  <table *ngIf="isShowTable" class="text-left text-sm font-light mx-4">
-    <thead>
-      <tr class="border-b font-medium dark:border-gray-500">
-        <th scope="col" class="px-6 py-4 text-center"></th>
-        <th
-          *ngFor="let char of tableHead"
-          scope="col"
-          class="px-6 py-4 text-center"
+  <div
+    class="container max-w-[90vw] overflow-x-auto overflow-y-hidden min-h-full h-full"
+  >
+    <table
+      *ngIf="isShowTable"
+      class="text-left text-sm font-light mx-auto mb-[17px]"
+    >
+      <thead>
+        <tr class="border-b font-medium dark:border-gray-500">
+          <th scope="col" class="px-4 py-2 text-center"></th>
+          <th
+            *ngFor="let char of substitutions | keyvalue : onCompare"
+            scope="col"
+            class="px-4 py-2 text-center"
+          >
+            {{ char.key }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let secretChar of secretKeyArr; index as i"
+          class="border-b transition duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          {{ char }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let char of substitutions | keyvalue : onCompare"
-        class="border-b transition duration-300 ease-in-out hover:bg-gray-100 dark:hover:bg-gray-800"
-      >
-        <td class="whitespace-nowrap px-6 py-4 font-medium">
-          {{ char.key }}
-        </td>
-        <td *ngFor="let item of char.value" class="whitespace-nowrap px-6 py-4">
-          {{ item }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="whitespace-nowrap px-4 py-2 font-medium">
+            {{ secretChar }}
+          </td>
+          <td
+            *ngFor="let char of substitutions | keyvalue : onCompare"
+            class="whitespace-nowrap px-4 py-2"
+          >
+            {{ char.value[i] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </ng-container>
